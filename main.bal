@@ -17,7 +17,7 @@ type Item record {
 
 type Department record {
     string id = "-1";
-    string name = "-1";
+    string departmentName = "-1";
     string location = "-1";
     string manager = "-1";
 };
@@ -121,14 +121,14 @@ service /ecom/rest on new http:Listener(9091) {
     resource function get department(string departmentName) returns Department|ErrorRecord {
         io:println("department by name() called: ");
         Department[] items = [];
-        Department item1 = {id: "1", name: "clothing", location: "uk", manager: "manager1"};
-        Department item2 = {id: "2", name: "kitchen", location: "usa", manager: "manager2"};
-        Department item3 = {id: "3", name: "vehicle", location: "japan", manager: "manager3"};
+        Department item1 = {id: "1", departmentName: "clothing", location: "uk", manager: "manager1"};
+        Department item2 = {id: "2", departmentName: "kitchen", location: "usa", manager: "manager2"};
+        Department item3 = {id: "3", departmentName: "vehicle", location: "japan", manager: "manager3"};
         items.push(item1);
         items.push(item2);
         items.push(item3);
         foreach Department item in items {
-            if (item.name == departmentName) {
+            if (item.departmentName == departmentName) {
                 return item;
             }
         }  
@@ -147,20 +147,15 @@ service /ecom/rest on new http:Listener(9091) {
         return "Successfully added the new pet: " + name;
     }
 
-    resource function put updatePet(@http:Payload map<json> mapJson) returns string {
-        io:println("updatePet() called: ");
+    resource function post addPurchase(@http:Payload map<json> mapJson) returns string {
+        io:println("addPurchase() called: ");
         string name = <string>mapJson["name"];
-        return "Successfully updated the petstore for pet: " + name;
+        return "Successfully added the new purchased: " + name;
     }
 
-
-    resource function delete deletePet(string idstring) returns string {
-        io:println("updateDeliveryStatus() called: ");
-        return "Successfully deleted the pet: " + idstring;
-    }
-
-    resource function get pet(int itemId) returns Pet|ErrorRecord {
-        return {id: itemId, name: "abc", description: "descrption1"};
+    resource function post addOrder(@http:Payload map<json> mapJson) returns string {
+        io:println("addOrder() called: ");
+        return "Successfully added the orders: ";
     }
 
     resource function get test() returns Pet|ErrorRecord {
